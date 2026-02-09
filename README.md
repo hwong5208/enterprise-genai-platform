@@ -12,20 +12,21 @@ This document outlines the architectural strategy to "bridge GenAI with producti
 The system is designed as a cloud-native solution on AWS, leveraging **EKS** for orchestration and **Spot Instances** for cost-optimization of GPU workloads.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffcc00', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#faac58'}}}%%
 graph TD
     %% --- Styles ---
-    classDef client fill:#E3F2FD,stroke:#0d47a1,stroke-width:2px,color:#000
-    classDef aws fill:#FFF3E0,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5,color:#000
-    classDef control fill:#FFFDE7,stroke:#f57f17,stroke-width:2px,color:#000
-    classDef compute fill:#E8F5E9,stroke:#1b5e20,stroke-width:2px,color:#000
-    classDef storage fill:#F3E5F5,stroke:#4a148c,stroke-width:2px,color:#000
-    classDef monitor fill:#FFEBEE,stroke:#c62828,stroke-width:2px,color:#000
+    classDef client fill:#ffffff,stroke:#0d47a1,stroke-width:2px,color:#000000
+    classDef aws fill:#ffffff,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5,color:#000000
+    classDef control fill:#ffffff,stroke:#f57f17,stroke-width:2px,color:#000000
+    classDef compute fill:#ffffff,stroke:#1b5e20,stroke-width:2px,color:#000000
+    classDef storage fill:#ffffff,stroke:#4a148c,stroke-width:2px,color:#000000
+    classDef monitor fill:#ffffff,stroke:#c62828,stroke-width:2px,color:#000000
 
     %% --- Nodes ---
     Client(["Artist Workstation<br/>(Maya / Blender Plugin)"]):::client
 
     subgraph AWS_Cloud ["AWS Cloud Environment"]
-        style AWS_Cloud fill:#FAFAFA,stroke:#616161,stroke-width:2px,color:#000
+        style AWS_Cloud fill:#f9f9f9,stroke:#616161,stroke-width:1px,color:#000000
         
         %% Entry & Auth
         Gateway["API Gateway<br/>(Throttling & Security)"]:::aws
@@ -33,7 +34,7 @@ graph TD
         
         %% Orchestration Layer
         subgraph EKS_Cluster ["Amazon EKS Cluster (Control Plane)"]
-            style EKS_Cluster fill:#E0F7FA,stroke:#006064,stroke-width:2px,color:#000
+            style EKS_Cluster fill:#e3f2fd,stroke:#006064,stroke-width:1px,color:#000000
             
             subgraph Services ["Core Services (Fargate)"]
                 API_Svc["API Service<br/>(FastAPI / Python)"]:::control
@@ -50,14 +51,14 @@ graph TD
 
         %% Compute Layer
         subgraph Compute_Plane ["Compute Plane (GPU Spot Instances)"]
-            style Compute_Plane fill:#FFFFFF,stroke:#2E7D32,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+            style Compute_Plane fill:#e8f5e9,stroke:#2E7D32,stroke-width:1px,stroke-dasharray: 5 5,color:#000000
             Worker1["ComfyUI Worker 1<br/>(g4dn.xlarge)"]:::compute
             WorkerN["...Scale to N..."]:::compute
         end
 
         %% Data Layer
         subgraph Data_Layer ["Data & Storage"]
-            style Data_Layer fill:#FFFFFF,stroke:#7B1FA2,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+            style Data_Layer fill:#f3e5f5,stroke:#7B1FA2,stroke-width:1px,stroke-dasharray: 5 5,color:#000000
             EFS[("Amazon EFS<br/>Shared Models")]:::storage
             S3[("Amazon S3<br/>Generated Assets")]:::storage
             QLDB[("Amazon QLDB<br/>Immutable Ledger")]:::storage
