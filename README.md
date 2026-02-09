@@ -14,12 +14,12 @@ The system is designed as a cloud-native solution on AWS, leveraging **EKS** for
 ```mermaid
 graph TD
     %% --- Styles ---
-    classDef client fill:#E3F2FD,stroke:#0D47A1,stroke-width:2px,color:#000
-    classDef aws fill:#FFF3E0,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5,color:#000
-    classDef control fill:#FFFDE7,stroke:#F57F17,stroke-width:2px,color:#000
-    classDef compute fill:#E8F5E9,stroke:#1B5E20,stroke-width:2px,color:#000
-    classDef storage fill:#F3E5F5,stroke:#4A148C,stroke-width:2px,color:#000
-    classDef monitor fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#000
+    classDef client fill:#E3F2FD,stroke:#0d47a1,stroke-width:2px,color:#000
+    classDef aws fill:#FFF3E0,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+    classDef control fill:#FFFDE7,stroke:#f57f17,stroke-width:2px,color:#000
+    classDef compute fill:#E8F5E9,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef storage fill:#F3E5F5,stroke:#4a148c,stroke-width:2px,color:#000
+    classDef monitor fill:#FFEBEE,stroke:#c62828,stroke-width:2px,color:#000
 
     %% --- Nodes ---
     Client(["Artist Workstation<br/>(Maya / Blender Plugin)"]):::client
@@ -68,20 +68,20 @@ graph TD
     %% --- Connections ---
     Client ==>|REST API| Gateway
     Gateway ==> API_Svc
-    API_Svc -.->|1. Verify Token| Auth
-    API_Svc -->|2. Push Job| Queue
+    API_Svc -.->|"1. Verify Token"| Auth
+    API_Svc -->|"2. Push Job"| Queue
     
-    Karpenter -.->|3. Watch Queue Depth| Queue
-    Karpenter ==>|4. Provision Nodes| Compute_Plane
+    Karpenter -.->|"3. Watch Queue Depth"| Queue
+    Karpenter ==>|"4. Provision Nodes"| Compute_Plane
     
-    Compute_Plane -->|5. Poll Job| Queue
-    Compute_Plane ==>|6. Load Models (Read-Only)| EFS
-    Compute_Plane -->|7. Save Assets (Write-Once)| S3
-    Compute_Plane -->|8. Audit Log (Chain-of-Title)| QLDB
+    Compute_Plane -->|"5. Poll Job"| Queue
+    Compute_Plane ==>|"6. Load Models (Read-Only)"| EFS
+    Compute_Plane -->|"7. Save Assets (Write-Once)"| S3
+    Compute_Plane -->|"8. Audit Log (Chain-of-Title)"| QLDB
     
     %% Monitoring
-    Compute_Plane -.->|GPU Metrics| Prometheus
-    API_Svc -.->|Request Metrics| Prometheus
+    Compute_Plane -.->|"GPU Metrics"| Prometheus
+    API_Svc -.->|"Request Metrics"| Prometheus
     Prometheus ==>|Visualize| Grafana
 ```
 
